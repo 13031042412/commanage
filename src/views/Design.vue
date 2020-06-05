@@ -26,7 +26,6 @@
                     :group="{ name: 'pageDesign', pull: 'clone', put: false }"
                     :list="moduleSource"
                     :sort="false"
-                    @change="fnChange"
                 >
                     <!-- <div class="app-aside-item" v-for="item in moduleSource" :key="item">
                         <div class="aside-item-main">
@@ -46,7 +45,7 @@
             <section class="center-preview-container" :class="{'previewing-container': isPreview}">
                 <div class="main-preview-container">
                     <!-- top-nav -->
-                    <div ref="appMianDrag" class="app-mian-drag xjs_flex_container base_width">
+                    <div class="app-mian-drag xjs_flex_container base_width">
                         <draggable
                             class="xjs_flex_section_up"
                             :class="{'border-bottom': !isPreview}"
@@ -54,13 +53,27 @@
                             animation="250"
                             :list="xjs_up"
                             group="pageDesign"
+                            @change="component_change"
                         >
                             <component
                                 v-for="(item, i) in xjs_up"
                                 :key="i"
                                 :is="item.name"
                                 :datas="item.data"
-                            ></component>
+                            >
+                                <div class="editBtns">
+                                    <button
+                                        @click.stop="component_edit('xjs_up', item, i)"
+                                        class="btn btn-primary mr-2"
+                                        type="button"
+                                    >编辑</button>
+                                    <button
+                                        @click.stop="component_del('xjs_up',i)"
+                                        class="btn btn-danger"
+                                        type="button"
+                                    >删除</button>
+                                </div>
+                            </component>
                         </draggable>
                         <draggable
                             v-if="themeId != 2"
@@ -70,13 +83,27 @@
                             animation="250"
                             :list="xjs_left"
                             group="pageDesign"
+                            @change="component_change"
                         >
                             <component
                                 v-for="(item, i) in xjs_left"
                                 :key="i"
                                 :is="item.name"
                                 :datas="item.data"
-                            ></component>
+                            >
+                                <div class="editBtns">
+                                    <button
+                                        @click.stop="component_edit('xjs_left', item, i)"
+                                        class="btn btn-primary mr-2"
+                                        type="button"
+                                    >编辑</button>
+                                    <button
+                                        @click.stop="component_del('xjs_left',i)"
+                                        class="btn btn-danger"
+                                        type="button"
+                                    >删除</button>
+                                </div>
+                            </component>
                         </draggable>
                         <draggable
                             class="xjs_flex_aside_middle"
@@ -85,13 +112,27 @@
                             animation="250"
                             :list="xjs_middle"
                             group="pageDesign"
+                            @change="component_change"
                         >
                             <component
                                 v-for="(item, i) in xjs_middle"
                                 :key="i"
                                 :is="item.name"
                                 :datas="item.data"
-                            ></component>
+                            >
+                                <div class="editBtns">
+                                    <button
+                                        @click.stop="component_edit('xjs_middle', item, i)"
+                                        class="btn btn-primary mr-2"
+                                        type="button"
+                                    >编辑</button>
+                                    <button
+                                        @click.stop="component_del('xjs_middle',i)"
+                                        class="btn btn-danger"
+                                        type="button"
+                                    >删除</button>
+                                </div>
+                            </component>
                         </draggable>
                         <draggable
                             v-if="themeId != 3"
@@ -101,13 +142,27 @@
                             animation="250"
                             :list="xjs_right"
                             group="pageDesign"
+                            @change="component_change"
                         >
                             <component
                                 v-for="(item, i) in xjs_right"
                                 :key="i"
                                 :is="item.name"
                                 :datas="item.data"
-                            ></component>
+                            >
+                                <div class="editBtns">
+                                    <button
+                                        @click.stop="component_edit('xjs_right', item, i)"
+                                        class="btn btn-primary mr-2"
+                                        type="button"
+                                    >编辑</button>
+                                    <button
+                                        @click.stop="component_del('xjs_right',i)"
+                                        class="btn btn-danger"
+                                        type="button"
+                                    >删除</button>
+                                </div>
+                            </component>
                         </draggable>
                         <draggable
                             class="xjs_flex_section_down"
@@ -116,21 +171,92 @@
                             animation="250"
                             :list="xjs_down"
                             group="pageDesign"
+                            @change="component_change"
                         >
                             <component
                                 v-for="(item, i) in xjs_down"
                                 :key="i"
                                 :is="item.name"
                                 :datas="item.data"
-                            ></component>
+                            >
+                                <div class="editBtns">
+                                    <button
+                                        @click.stop="component_edit('xjs_down', item, i)"
+                                        class="btn btn-primary mr-2"
+                                        type="button"
+                                    >编辑</button>
+                                    <button
+                                        @click.stop="component_del('xjs_down',i)"
+                                        class="btn btn-danger"
+                                        type="button"
+                                    >删除</button>
+                                </div>
+                            </component>
                         </draggable>
                     </div>
                 </div>
             </section>
 
             <aside v-show="!isPreview" class="right-edit-container">
-                <div class="main-editor-container">123</div>
-                <button class="btn btn-primary" type="button" @click="test">测试</button>
+                <div v-if="!!current.data" class="main-editor-container">
+                    <!-- <div class="main-editor-container"> -->
+                    <!-- <h5>{{current.data.data.title}}</h5> -->
+                    <div class="header border-bottom d-flex">{{current.data.data.title}}</div>
+                    <!-- 图文列表编辑 -->
+                    <!-- <div class="editorItem">
+                        <div class="text-secondary my-3">标题名称</div>
+                        <input class="form-control" type="text" placeholder="请输入标题名称" />
+                        <div class="editorWrap">
+                            <div class="graphicCard">
+                                <i class="fa fa-times-circle close"></i>
+                                <label class="imgWrap mb-3">
+                                    <input
+                                        @change="imgUpload($event)"
+                                        name
+                                        class="d-none"
+                                        type="file"
+                                        accept="image/*"
+                                    />
+                                    <img src alt />
+                                    <div class="modify_image">修改</div>
+                                </label>
+                                <input class="form-control mb-3" type="text" placeholder="请输入文章标题" />
+                                <input class="form-control" type="text" placeholder="请输入文章简介" />
+                            </div>
+                        </div>
+                        <div class="editorWrap">
+                            <div class="graphicCard">
+                                <i class="fa fa-times-circle close"></i>
+                                <label class="imgWrap mb-3">
+                                    <input
+                                        @change="imgUpload($event)"
+                                        name
+                                        class="d-none"
+                                        type="file"
+                                        accept="image/*"
+                                    />
+                                    <img src alt />
+                                    <div class="modify_image">修改</div>
+                                </label>
+                                <input class="form-control mb-3" type="text" placeholder="请输入文章标题" />
+                                <input class="form-control" type="text" placeholder="请输入文章简介" />
+                            </div>
+                        </div>
+                    </div>-->
+                    <!-- 文字列表编辑 -->
+                    <div class="editorItem">
+                        <div class="text-secondary my-3">标题名称</div>
+                        <input class="form-control" type="text" placeholder="请输入标题名称" />
+                        <div class="editorWrap">
+                            <div class="graphicCard py-4">
+                                <i class="fa fa-times-circle close"></i>
+                                <input class="form-control" type="text" placeholder="请输入文章标题" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <p v-for="item in current.data.data.childs" :key="item.title">{{item.title}}</p>111 -->
+                </div>
             </aside>
         </div>
     </div>
@@ -142,9 +268,12 @@ import MySwiper from "../components/Swiper";
 import ListGraphic from "../components/ListGraphic";
 import draggable from "vuedraggable";
 import Item from "../components/Item";
+import UserInfo from "../components/UserInfo";
+import ListText from "../components/ListText";
 
 export default {
     name: "Design",
+    components: { draggable, MySwiper, ListGraphic, Item, UserInfo, ListText },
     data() {
         return {
             isPreview: false,
@@ -153,7 +282,8 @@ export default {
                 {
                     name: "MySwiper",
                     data: {
-                        banners: [
+                        title: "轮播图",
+                        childs: [
                             {
                                 href: "",
                                 src:
@@ -271,7 +401,8 @@ export default {
                     icon: "fa-window-maximize",
                     name: "MySwiper",
                     data: {
-                        banners: [
+                        title: "轮播图",
+                        childs: [
                             {
                                 href: "http://www.jiangshi.org/",
                                 src:
@@ -310,19 +441,31 @@ export default {
                             }
                         ]
                     }
+                },
+                {
+                    title: "我的信息",
+                    icon: "fa-address-card-o",
+                    name: "UserInfo",
+                    data: { title: "我的信息" }
                 }
-            ]
+            ],
+            current: {}
         };
     },
-    components: { draggable, MySwiper, ListGraphic, Item },
     created() {
         let that = this;
         that.themeId = that.$route.params.theme;
+
+        this.current = {
+            name: "aaa",
+            data: this.moduleSource[1],
+            index: 0
+        };
     },
     mounted() {
         let that = this;
         console.log(this.$route.params);
-        $(".component-layout").click(function() {
+        $(".app-mian-drag").on("click", ".component-layout", function() {
             $(".component-layout").removeClass("active");
             $(this).addClass("active");
         });
@@ -334,12 +477,48 @@ export default {
         abortPreview() {
             this.isPreview = false;
         },
-
-        addModule(evt) {
-            console.log("add", evt);
+        component_del(listName, index) {
+            // 删除组件
+            this[listName].splice(index, 1);
         },
-        fnChange(evt) {
-            console.log("change", evt);
+        component_edit(listName, item, index) {
+            console.log(listName, item, index);
+            this.current = {
+                name: listName,
+                data: item,
+                index: index
+            };
+        },
+        component_change(evt) {
+            // 拖拽项改变
+            console.log("change: ", evt);
+            $(".component-layout").removeClass("active");
+            this.current = {};
+        },
+        imgUpload(obj) {
+            var file = obj.target.files[0];
+            if (!file) return false;
+            var img = $(obj.target).next("img")[0];
+
+            // 可以进行一下文件类型的判断
+            if (!/image\/\w+/.test(file.type)) {
+                alert("请上传图片");
+                return false;
+            }
+            // 图片大小的限制
+            var fileSize = parseFloat(file.size / 1024 / 1024);
+            if (fileSize > 2) {
+                alert("图片大小不超过2MB");
+                return false;
+            }
+            // 读取图片文件流
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                // img.attr("src", e.target.result);
+                img.src = e.target.result;
+            };
+            console.log(obj.target, img);
         },
 
         test() {
@@ -352,54 +531,4 @@ export default {
 
 <style >
 @import url("../assets/design.css");
-.xjs_flex_container {
-    display: flex;
-    flex-flow: row wrap;
-    align-content: flex-start;
-}
-.xjs_flex_container > * {
-    flex: 1 100%;
-    max-width: 100%;
-    min-height: 100px;
-}
-.previewing-container .xjs_flex_container > * {
-    min-height: auto;
-}
-.xjs_flex_aside_left.theme2,
-.xjs_flex_aside_left.theme3,
-.xjs_flex_aside_right.theme2,
-.xjs_flex_aside_right.theme3 {
-    width: 31.8%;
-    flex: 0 31.8%;
-}
-.xjs_flex_aside_left.theme4,
-.xjs_flex_aside_right.theme4 {
-    width: 23.2%;
-    flex: 0 23.2%;
-}
-.xjs_flex_aside_middle.theme2,
-.xjs_flex_aside_middle.theme3 {
-    width: 68.1%;
-    flex: 1;
-}
-.xjs_flex_aside_middle.theme4 {
-    width: 53.4%;
-    flex: 1;
-}
-.previewing-container .xjs_content-title span {
-    font-size: 16px;
-}
-.previewing-container .xjs_media-body h5 {
-    font-size: 16px;
-}
-.previewing-container .xjs_media-text {
-    font-size: 13px;
-}
-.previewing-container .xjs_media-pic {
-    width: 170px;
-    max-width: 40%;
-}
-.sortable-placeholder {
-    background: rgba(255, 105, 0, 0.2);
-}
 </style>

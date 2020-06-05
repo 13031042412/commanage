@@ -9,6 +9,7 @@
                 <Media v-for="(item , index) in datas.childs" :key="index" />
             </div>
         </div>
+        <slot></slot>
     </div>
 </template>
 <script>

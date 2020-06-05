@@ -1,9 +1,9 @@
 <template>
-    <div class="mySwiper base_width mb-3 component-layout">
-        <div v-if="datas.banners.length > 0" class="swiper-container xjs_banner">
+    <div class="mySwiper base_width component-layout">
+        <div v-if="datas.childs.length > 0" class="swiper-container xjs_banner">
             <div class="swiper-wrapper">
                 <div
-                    v-for="item in datas.banners"
+                    v-for="item in datas.childs"
                     :key="item.src"
                     :data-href="item.href"
                     class="swiper-slide"
@@ -16,6 +16,7 @@
             <div class="swiper-button-next"></div>
             <div class="swiper-scrollbar"></div>
         </div>
+        <slot></slot>
     </div>
 </template>
 <script>
@@ -27,7 +28,7 @@ export default {
             type: Object,
             default: function() {
                 return {
-                    banners: [
+                    childs: [
                         {
                             href: "http://www.jiangshi.org/",
                             src:
