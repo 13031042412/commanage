@@ -3,10 +3,10 @@
         <div class="xjs_section">
             <div class="xjs_content-title">
                 <i class="fa fa-certificate"></i>
-                <span>最新文章</span>
+                <span>{{datas.title}}</span>
             </div>
             <div>
-                <Media v-for="(item , index) in datas.childs" :key="index" />
+                <Media v-for="item in datas.childs" :key="item.id" :con="item" />
             </div>
         </div>
         <slot></slot>
@@ -25,11 +25,15 @@ export default {
                     title: "图文列表",
                     childs: [
                         {
+                            id: 0,
                             title: "",
                             picSrc: "",
                             text: "",
-                            date: "",
-                            views: ""
+                            date: new Date()
+                                .toLocaleDateString()
+                                .replace(/\//g, "-"),
+                            views: 0,
+                            href: ""
                         }
                     ]
                 };
@@ -42,7 +46,9 @@ export default {
         };
     },
     components: { Media },
-    mounted() {}
+    mounted() {
+        // console.log(this.datas);
+    }
 };
 </script>
 <style scoped>

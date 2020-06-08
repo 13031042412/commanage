@@ -3,23 +3,11 @@
         <div class="xjs_section xjs_module_list-news">
             <div class="xjs_module_list-news-head">
                 <i class="iconfont icon-certificate"></i>
-                <span>主讲课程</span>
+                <span>{{datas.title}}</span>
             </div>
             <ul class="xjs_module_list-news-body">
-                <li class="xjs_module_list-news-item">
-                    <span data-href="##">1、健康养生</span>
-                </li>
-                <li class="xjs_module_list-news-item">
-                    <span data-href="##">2、国学文化</span>
-                </li>
-                <li class="xjs_module_list-news-item">
-                    <span data-href="##">3、易经风水</span>
-                </li>
-                <li class="xjs_module_list-news-item">
-                    <span data-href="##">4、国学管理</span>
-                </li>
-                <li class="xjs_module_list-news-item">
-                    <span data-href="##">5、互联网+</span>
+                <li class="xjs_module_list-news-item" v-for="item in datas.childs" :key="item.id">
+                    <span>{{item.text}}</span>
                 </li>
             </ul>
         </div>
@@ -29,25 +17,30 @@
 <script>
 export default {
     name: "ListText",
-    data() {
-        return {
-            datas: {
-                type: Object,
-                default: function() {
-                    return {
-                        title: "文字列表",
-                        childs: [
-                            {
-                                text: ""
-                            }
-                        ]
-                    };
-                }
+    props: {
+        datas: {
+            type: Object,
+            default: function() {
+                return {
+                    title: "文字列表",
+                    childs: [
+                        {
+                            id: 0,
+                            text: "",
+                            href: ""
+                        }
+                    ]
+                };
             }
-        };
+        }
+    },
+    data() {
+        return {};
     },
     components: {},
-    mounted() {}
+    mounted() {
+        // console.log(this.datas);
+    }
 };
 </script>
 <style scoped>

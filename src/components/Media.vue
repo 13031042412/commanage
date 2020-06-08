@@ -1,24 +1,21 @@
 <template>
     <div class="xjs_media">
         <span class="xjs_media-pic" data-href>
-            <img
-                src="https://www.17sucai.com/preview/806169/2020-04-18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/8.jpg"
-                alt
-            />
+            <img :src="con.picSrc" alt />
         </span>
         <div class="xjs_media-body">
             <h5>
-                <span data-href>js前端实现模糊查询</span>
+                <span data-href>{{con.title}}</span>
             </h5>
-            <p
-                class="xjs_media-text"
-            >js前端实现模糊查询对于模糊查询，一般都是传关键字给后端，由后端来做。但是有时候一些轻量级的列表前端来做可以减少ajax请求，在一定程度上提高用户体验。</p>
+            <p class="xjs_media-text">{{con.text}}</p>
             <div class="xjs_media-bottom">
                 <span>
-                    <i class="fa fa-clock-o"></i>2019-04-03
+                    <i class="fa fa-clock-o"></i>
+                    {{con.date}}
                 </span>
                 <span>
-                    <i class="fa fa-eye"></i>123
+                    <i class="fa fa-eye"></i>
+                    {{con.views}}
                 </span>
             </div>
         </div>
@@ -27,6 +24,22 @@
 <script>
 export default {
     name: "Media",
+    props: {
+        con: {
+            type: Object,
+            default: function() {
+                return {
+                    id: 0,
+                    title: "",
+                    picSrc: "",
+                    text: "",
+                    date: new Date().toLocaleDateString().replace(/\//g, "-"),
+                    views: 0,
+                    href: ""
+                };
+            }
+        }
+    },
     data() {
         return {
             str: ""

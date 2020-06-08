@@ -26,6 +26,7 @@
                     :group="{ name: 'pageDesign', pull: 'clone', put: false }"
                     :list="moduleSource"
                     :sort="false"
+                    :clone="component_clone"
                 >
                     <!-- <div class="app-aside-item" v-for="item in moduleSource" :key="item">
                         <div class="aside-item-main">
@@ -46,6 +47,7 @@
                 <div class="main-preview-container">
                     <!-- top-nav -->
                     <div class="app-mian-drag xjs_flex_container base_width">
+                        <!-- 内容一 -->
                         <draggable
                             class="xjs_flex_section_up"
                             :class="{'border-bottom': !isPreview}"
@@ -57,7 +59,7 @@
                         >
                             <component
                                 v-for="(item, i) in xjs_up"
-                                :key="i"
+                                :key="item.id"
                                 :is="item.name"
                                 :datas="item.data"
                             >
@@ -75,6 +77,7 @@
                                 </div>
                             </component>
                         </draggable>
+                        <!-- 内容左 -->
                         <draggable
                             v-if="themeId != 2"
                             class="xjs_flex_aside_left"
@@ -105,6 +108,7 @@
                                 </div>
                             </component>
                         </draggable>
+                        <!-- 内容中 -->
                         <draggable
                             class="xjs_flex_aside_middle"
                             :class="'theme'+themeId"
@@ -134,6 +138,7 @@
                                 </div>
                             </component>
                         </draggable>
+                        <!-- 内容右 -->
                         <draggable
                             v-if="themeId != 3"
                             class="xjs_flex_aside_right"
@@ -164,6 +169,7 @@
                                 </div>
                             </component>
                         </draggable>
+                        <!-- 内容下 -->
                         <draggable
                             class="xjs_flex_section_down"
                             :class="{'border-top': !isPreview}"
@@ -199,64 +205,118 @@
 
             <aside v-show="!isPreview" class="right-edit-container">
                 <div v-if="!!current.data" class="main-editor-container">
-                    <!-- <div class="main-editor-container"> -->
-                    <!-- <h5>{{current.data.data.title}}</h5> -->
-                    <div class="header border-bottom d-flex">{{current.data.data.title}}</div>
+                    <div class="header border-bottom d-flex">{{current.data.title}}</div>
                     <!-- 图文列表编辑 -->
-                    <!-- <div class="editorItem">
-                        <div class="text-secondary my-3">标题名称</div>
-                        <input class="form-control" type="text" placeholder="请输入标题名称" />
-                        <div class="editorWrap">
+                    <div v-if="current.data.name == 'ListGraphic'" class="editorItem">
+                        <div class="text-secondary my-3">{{current.data.data.title}}</div>
+                        <input
+                            class="form-control"
+                            v-model="current.data.data.title"
+                            type="text"
+                            placeholder="请输入标题名称"
+                        />
+                        <!-- <div v-if="current.data.data.childs.length"> -->
+                        <div
+                            v-for="item in current.data.data.childs"
+                            :key="item.id"
+                            class="editorWrap"
+                        >
                             <div class="graphicCard">
                                 <i class="fa fa-times-circle close"></i>
-                                <label class="imgWrap mb-3">
+                                <label class="imgWrap">
                                     <input
-                                        @change="imgUpload($event)"
+                                        @change="imgUpload($event, item)"
                                         name
                                         class="d-none"
                                         type="file"
                                         accept="image/*"
                                     />
-                                    <img src alt />
+                                    <img :src="item.picSrc" alt />
                                     <div class="modify_image">修改</div>
                                 </label>
-                                <input class="form-control mb-3" type="text" placeholder="请输入文章标题" />
-                                <input class="form-control" type="text" placeholder="请输入文章简介" />
+                                <div class="text-secondary text-center mb-3 small">（建议尺寸为480*300）</div>
+                                <input
+                                    class="form-control mb-3"
+                                    type="text"
+                                    v-model="item.title"
+                                    placeholder="请输入文章标题"
+                                />
+                                <input
+                                    class="form-control mb-3"
+                                    type="text"
+                                    v-model="item.text"
+                                    placeholder="请输入文章简介"
+                                />
+                                <input
+                                    class="form-control"
+                                    type="url"
+                                    v-model="item.href"
+                                    placeholder="跳转链接"
+                                />
                             </div>
                         </div>
-                        <div class="editorWrap">
-                            <div class="graphicCard">
-                                <i class="fa fa-times-circle close"></i>
-                                <label class="imgWrap mb-3">
-                                    <input
-                                        @change="imgUpload($event)"
-                                        name
-                                        class="d-none"
-                                        type="file"
-                                        accept="image/*"
-                                    />
-                                    <img src alt />
-                                    <div class="modify_image">修改</div>
-                                </label>
-                                <input class="form-control mb-3" type="text" placeholder="请输入文章标题" />
-                                <input class="form-control" type="text" placeholder="请输入文章简介" />
-                            </div>
-                        </div>
-                    </div>-->
-                    <!-- 文字列表编辑 -->
-                    <div class="editorItem">
-                        <div class="text-secondary my-3">标题名称</div>
-                        <input class="form-control" type="text" placeholder="请输入标题名称" />
-                        <div class="editorWrap">
-                            <div class="graphicCard py-4">
-                                <i class="fa fa-times-circle close"></i>
-                                <input class="form-control" type="text" placeholder="请输入文章标题" />
-                            </div>
-                        </div>
-                    </div>
+                        <!-- </div> -->
 
-                    <!-- <p v-for="item in current.data.data.childs" :key="item.title">{{item.title}}</p>111 -->
+                        <button
+                            v-show="current.data.data.childs.length< 5"
+                            class="btn btn-outline-primary btn-block"
+                            type="button"
+                            @click="component_add"
+                        >+增加</button>
+                        <!-- <button
+                            class="btn btn-primary btn-block"
+                            type="button"
+                            @click="component_save"
+                        >保存</button>-->
+                    </div>
+                    <!-- 文字列表编辑 -->
+                    <div v-if="current.data.name == 'ListText'" class="editorItem">
+                        <div class="text-secondary my-3">{{current.data.data.title}}</div>
+                        <input
+                            class="form-control"
+                            type="text"
+                            v-model="current.data.data.title"
+                            placeholder="请输入标题名称"
+                        />
+                        <div
+                            class="editorWrap"
+                            v-for="item in current.data.data.childs"
+                            :key="item.id"
+                        >
+                            <div class="graphicCard py-4">
+                                <i
+                                    class="fa fa-times-circle close"
+                                    @click="component_del2(item.id)"
+                                ></i>
+                                <input
+                                    class="form-control mb-3"
+                                    type="text"
+                                    v-model="item.text"
+                                    placeholder="请输入文章标题"
+                                />
+                                <input
+                                    class="form-control"
+                                    type="url"
+                                    v-model="item.href"
+                                    placeholder="跳转链接"
+                                />
+                            </div>
+                        </div>
+
+                        <button
+                            v-show="current.data.data.childs.length< 5"
+                            class="btn btn-outline-primary btn-block"
+                            type="button"
+                            @click="component_add"
+                        >+增加</button>
+                        <!-- <button
+                            class="btn btn-primary btn-block"
+                            type="button"
+                            @click="component_save"
+                        >保存</button>-->
+                    </div>
                 </div>
+                <button @click="test" class="btn btn-danger">test</button>
             </aside>
         </div>
     </div>
@@ -264,12 +324,15 @@
 
 <script>
 import "swiper/css/swiper.min.css";
+import { MODULESOURCE } from "../assets/moduleSource";
 import MySwiper from "../components/Swiper";
 import ListGraphic from "../components/ListGraphic";
 import draggable from "vuedraggable";
 import Item from "../components/Item";
 import UserInfo from "../components/UserInfo";
 import ListText from "../components/ListText";
+
+let tem_id = 0;
 
 export default {
     name: "Design",
@@ -314,16 +377,22 @@ export default {
             ],
             xjs_left: [
                 {
+                    title: "图文列表",
+                    icon: "fa-th-list",
                     name: "ListGraphic",
                     data: {
                         title: "图文列表",
                         childs: [
                             {
-                                title: "",
-                                picSrc: "",
-                                text: "",
-                                date: "",
-                                views: ""
+                                title:
+                                    "国足有腰了！超强海归新星有资格入选国足，3场2个世界波证明实力",
+                                picSrc:
+                                    "https://p0.ssl.qhimg.com/t01800e1fb2f6d1e448.webp",
+                                text:
+                                    "国足有腰了！在郑智年越来越大，蒿俊闵和吴曦也不再年轻的情况下，谁在未来撑起国足的腰一直是大家关注的焦点。",
+                                date: "2020-1-20",
+                                views: 0,
+                                href: ""
                             }
                         ]
                     }
@@ -331,83 +400,22 @@ export default {
             ],
             xjs_middle: [
                 {
+                    title: "图文列表",
+                    icon: "fa-th-list",
                     name: "ListGraphic",
                     data: {
                         title: "图文列表",
                         childs: [
                             {
-                                title: "",
-                                picSrc: "",
-                                text: "",
-                                date: "",
-                                views: ""
-                            }
-                        ]
-                    }
-                },
-                {
-                    name: "ListGraphic",
-                    data: {
-                        title: "图文列表",
-                        childs: [
-                            {
-                                title: "",
-                                picSrc: "",
-                                text: "",
-                                date: "",
-                                views: ""
-                            }
-                        ]
-                    }
-                }
-            ],
-            xjs_right: [
-                {
-                    name: "ListGraphic",
-                    data: {
-                        title: "图文列表",
-                        childs: [
-                            {
-                                title: "",
-                                picSrc: "",
-                                text: "",
-                                date: "",
-                                views: ""
-                            }
-                        ]
-                    }
-                }
-            ],
-            xjs_down: [
-                {
-                    name: "ListGraphic",
-                    data: {
-                        title: "图文列表",
-                        childs: [
-                            {
-                                title: "",
-                                picSrc: "",
-                                text: "",
-                                date: "",
-                                views: ""
-                            }
-                        ]
-                    }
-                }
-            ],
-            moduleSource: [
-                {
-                    title: "轮播图",
-                    icon: "fa-window-maximize",
-                    name: "MySwiper",
-                    data: {
-                        title: "轮播图",
-                        childs: [
-                            {
-                                href: "http://www.jiangshi.org/",
-                                src:
-                                    "http://img1.jiangshi.org/rsi/20200417/171006566350_1422.jpg",
-                                alt: "default pic."
+                                title:
+                                    "女排31岁世界冠军婚后再训练！少校军衔比袁心玥高，丈夫1米97",
+                                picSrc:
+                                    "https://p0.ssl.qhimgs4.com/t01690342459fe00ab4.webp",
+                                text:
+                                    "杨珺菁依然放不下这片赛场，她在社交媒体上发布了自己再次参加训练的照片。这位中国女排世界冠军并没有像很多人预料的那样结婚后退役，她还仍然要继续打球。",
+                                date: "2020-06-03",
+                                views: 0,
+                                href: ""
                             }
                         ]
                     }
@@ -420,47 +428,130 @@ export default {
                         title: "图文列表",
                         childs: [
                             {
-                                title: "图文列表标题",
-                                picSrc: "",
-                                text: "图文列表简介",
-                                date: "",
-                                views: 0
+                                title:
+                                    "新疆男篮或迎改变，全华班模式恐提前放弃本赛季，特罗特去哪了？",
+                                picSrc:
+                                    "https://p0.ssl.qhimg.com/t01aeba22713584833d.webp",
+                                text:
+                                    "目前CBA联赛已经确定将在本月20日复赛，届时因疫情原因停赛数个月的CBA联赛终于归来，联赛回归后因“新赛制”的变更，对决将会十分有趣，两个小组角逐，广东男篮所在的小组堪称一枝独秀",
+                                date: "2020-06-03",
+                                views: 0,
+                                href: ""
                             }
                         ]
                     }
-                },
-                {
-                    title: "文字列表",
-                    icon: "fa-list-ol",
-                    name: "ListText",
-                    data: {
-                        title: "文字列表",
-                        childs: [
-                            {
-                                text: "文字列表简介"
-                            }
-                        ]
-                    }
-                },
+                }
+            ],
+            xjs_right: [
                 {
                     title: "我的信息",
                     icon: "fa-address-card-o",
                     name: "UserInfo",
-                    data: { title: "我的信息" }
+                    data: { title: "我的信息", childs: [] }
+                },
+                {
+                    title: "图文列表",
+                    icon: "fa-th-list",
+                    name: "ListGraphic",
+                    data: {
+                        title: "图文列表",
+                        childs: [
+                            {
+                                title:
+                                    "维尔纳争夺战利物浦没输，克洛普觉得这钱不值",
+                                picSrc:
+                                    "https://p0.ssl.qhimgs4.com/t014ac5e303f1b107cf.webp",
+                                text:
+                                    "虎扑6月5日讯 据多家媒体报道，切尔西已经与莱比锡达成一致，维尔纳将加盟蓝军。对此，红军旧将约翰-巴恩斯表示，维尔纳没来利物浦，是因为克洛普觉得不值。",
+                                date: "2020-06-05",
+                                views: 12,
+                                href: ""
+                            }
+                        ]
+                    }
                 }
             ],
+            xjs_down: [
+                {
+                    title: "图文列表",
+                    icon: "fa-th-list",
+                    name: "ListGraphic",
+                    data: {
+                        title: "图文列表",
+                        childs: [
+                            {
+                                title:
+                                    "巴托梅乌请求二次降薪，但巴萨球员不打算接受",
+                                picSrc:
+                                    "https://p0.ssl.qhimgs4.com/t01fa6c59780ac3b27f.webp",
+                                text:
+                                    "虎扑6月3日讯 此前，据加泰电台消息，巴萨主席巴托梅乌与全队的会议上已经再次向一线队请求进行降薪，不过球员们并不打算接受。",
+                                date: "2020-06-03",
+                                views: 0,
+                                href: ""
+                            }
+                        ]
+                    }
+                }
+            ],
+            moduleSource: [].concat(MODULESOURCE),
             current: {}
         };
     },
     created() {
+        console.log(MODULESOURCE);
         let that = this;
         that.themeId = that.$route.params.theme;
-
-        this.current = {
-            name: "aaa",
-            data: this.moduleSource[1],
-            index: 0
-        };
+        // 处理 xjs_up
+        if (that.xjs_up.length) {
+            $.each(that.xjs_up, function(index0, value0) {
+                $.map(value0.data.childs, function(n, i) {
+                    n.id = tem_id;
+                    tem_id++;
+                    return n;
+                });
+            });
+        }
+        // 处理 xjs_left
+        if (that.xjs_left.length) {
+            $.each(that.xjs_left, function(index0, value0) {
+                $.map(value0.data.childs, function(n, i) {
+                    n.id = tem_id;
+                    tem_id++;
+                    return n;
+                });
+            });
+        }
+        // 处理 xjs_middle
+        if (that.xjs_middle.length) {
+            $.each(that.xjs_middle, function(index0, value0) {
+                $.map(value0.data.childs, function(n, i) {
+                    n.id = tem_id;
+                    tem_id++;
+                    return n;
+                });
+            });
+        }
+        // 处理 xjs_right
+        if (that.xjs_right.length) {
+            $.each(that.xjs_right, function(index0, value0) {
+                $.map(value0.data.childs, function(n, i) {
+                    n.id = tem_id;
+                    tem_id++;
+                    return n;
+                });
+            });
+        }
+        // 处理 xjs_down
+        if (that.xjs_down.length) {
+            $.each(that.xjs_down, function(index0, value0) {
+                $.map(value0.data.childs, function(n, i) {
+                    n.id = tem_id;
+                    tem_id++;
+                    return n;
+                });
+            });
+        }
     },
     mounted() {
         let that = this;
@@ -480,25 +571,44 @@ export default {
         component_del(listName, index) {
             // 删除组件
             this[listName].splice(index, 1);
+            this.current = {};
+        },
+        component_del2(id) {
+            // 删除组件内某一项
+            let that = this,
+                arr = that.current.data.data.childs;
+            for (var i = 0, len = arr.length; i < len; i++) {
+                if (arr[i].id == id) {
+                    arr.splice(i, 1);
+                    break;
+                }
+            }
         },
         component_edit(listName, item, index) {
-            console.log(listName, item, index);
             this.current = {
                 name: listName,
                 data: item,
                 index: index
             };
+            console.log(this.current);
         },
         component_change(evt) {
-            // 拖拽项改变
+            // 拖拽项改变时，清空当前项，防止数据错乱
             console.log("change: ", evt);
             $(".component-layout").removeClass("active");
             this.current = {};
+            if (!!evt.added) {
+                $.map(evt.added.element.data.childs, function(n, i) {
+                    n.id = tem_id++;
+                    return n;
+                });
+            }
         },
-        imgUpload(obj) {
-            var file = obj.target.files[0];
+        imgUpload(obj, item) {
+            // let that = this;
+            let file = obj.target.files[0];
             if (!file) return false;
-            var img = $(obj.target).next("img")[0];
+            let img = $(obj.target).next("img")[0];
 
             // 可以进行一下文件类型的判断
             if (!/image\/\w+/.test(file.type)) {
@@ -506,24 +616,45 @@ export default {
                 return false;
             }
             // 图片大小的限制
-            var fileSize = parseFloat(file.size / 1024 / 1024);
+            let fileSize = parseFloat(file.size / 1024 / 1024);
             if (fileSize > 2) {
                 alert("图片大小不超过2MB");
                 return false;
             }
             // 读取图片文件流
-            var reader = new FileReader();
+            let reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function(e) {
-                // img.attr("src", e.target.result);
                 img.src = e.target.result;
+                item.picSrc = e.target.result;
             };
-            console.log(obj.target, img);
+        },
+        component_save() {
+            // this[this.current.name][this.current.index] = this.current.data;
+        },
+        component_add() {
+            let that = this;
+            let component_name = that.current.data.name;
+            for (var i = 0, len = MODULESOURCE.length; i < len; i++) {
+                if (MODULESOURCE[i].name == component_name) {
+                    let obj = JSON.parse(
+                        JSON.stringify(MODULESOURCE[i].data.childs[0])
+                    );
+                    $.extend(obj, {
+                        id: tem_id++
+                    });
+                    that.current.data.data.childs.push(obj);
+                    break;
+                }
+            }
+        },
+        component_clone(evt) {
+            console.log(evt);
+            return JSON.parse(JSON.stringify(evt));
         },
 
         test() {
-            console.log(this.xjs_up);
-            //   $(".app-mian-drag").append('<component is="ListGraphic"></component>');
+            console.log("run test.", MODULESOURCE);
         }
     }
 };
