@@ -4,11 +4,11 @@
             <div class="swiper-wrapper">
                 <div
                     v-for="item in datas.childs"
-                    :key="item.src"
+                    :key="item.id"
                     :data-href="item.href"
                     class="swiper-slide"
                 >
-                    <img :src="item.src" :alt="item.alt" />
+                    <img :src="item.picSrc" :alt="item.alt" />
                 </div>
             </div>
             <div class="swiper-pagination"></div>
@@ -30,9 +30,10 @@ export default {
                 return {
                     childs: [
                         {
+                            id: 0,
                             href: "http://www.jiangshi.org/",
-                            src:
-                                "http://img1.jiangshi.org/rsi/20200417/171006566350_1422.jpg",
+                            picSrc:
+                                "http://img1.jiangshi.org/rsi/20200609/091020403560_1422.jpg",
                             alt: "default pic."
                         }
                     ]
@@ -88,5 +89,6 @@ export default {
 }
 .xjs_banner .swiper-slide img {
     max-width: 100%;
+    max-height: 300px;
 }
 </style>

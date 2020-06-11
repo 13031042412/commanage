@@ -79,7 +79,7 @@
                         </draggable>
                         <!-- 内容左 -->
                         <draggable
-                            v-if="themeId != 2"
+                            v-if="[3,4].indexOf(themeId) > -1"
                             class="xjs_flex_aside_left"
                             :class="['theme'+themeId, {'bg-light border-right': !isPreview}]"
                             ghostClass="sortable-placeholder"
@@ -140,7 +140,7 @@
                         </draggable>
                         <!-- 内容右 -->
                         <draggable
-                            v-if="themeId != 3"
+                            v-if="[2,4].indexOf(themeId) > -1"
                             class="xjs_flex_aside_right"
                             :class="['theme'+themeId, {'bg-light border-left': !isPreview}]"
                             ghostClass="sortable-placeholder"
@@ -206,6 +206,50 @@
             <aside v-show="!isPreview" class="right-edit-container">
                 <div v-if="!!current.data" class="main-editor-container">
                     <div class="header border-bottom d-flex">{{current.data.title}}</div>
+                    <!-- 轮播图列表编辑 -->
+                    <div v-if="current.data.name == 'MySwiper'" class="editorItem">
+                        <div class="text-secondary my-3">{{current.data.data.title}}</div>
+                        <input
+                            class="form-control"
+                            v-model="current.data.data.title"
+                            type="text"
+                            placeholder="请输入标题名称"
+                        />
+                        <div
+                            v-for="item in current.data.data.childs"
+                            :key="item.id"
+                            class="editorWrap"
+                        >
+                            <div class="graphicCard">
+                                <i class="fa fa-times-circle close"></i>
+                                <label class="imgWrap">
+                                    <input
+                                        @change="imgUpload($event, item)"
+                                        name
+                                        class="d-none"
+                                        type="file"
+                                        accept="image/*"
+                                    />
+                                    <img :src="item.picSrc" alt />
+                                    <div class="modify_image">修改</div>
+                                </label>
+                                <div class="text-secondary text-center mb-3 small">（建议尺寸为1160*242）</div>
+                                <input
+                                    class="form-control"
+                                    type="url"
+                                    v-model="item.href"
+                                    placeholder="跳转链接"
+                                />
+                            </div>
+                        </div>
+
+                        <button
+                            v-show="current.data.data.childs.length< 5"
+                            class="btn btn-outline-primary btn-block"
+                            type="button"
+                            @click="component_add"
+                        >+增加</button>
+                    </div>
                     <!-- 图文列表编辑 -->
                     <div v-if="current.data.name == 'ListGraphic'" class="editorItem">
                         <div class="text-secondary my-3">{{current.data.data.title}}</div>
@@ -343,31 +387,33 @@ export default {
             themeId: 2,
             xjs_up: [
                 {
+                    title: "轮播图",
+                    icon: "fa-window-maximize",
                     name: "MySwiper",
                     data: {
                         title: "轮播图",
                         childs: [
                             {
                                 href: "",
-                                src:
+                                picSrc:
                                     "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1591088301454&di=c1c11e5b44c8b7c4203aaadb0bca2436&imgtype=0&src=http%3A%2F%2Fpic.90sjimg.com%2Fbanner%2F21%2F68%2F12%2FeJsRpmTiNlFeZahd0sfD.gif",
                                 alt: ""
                             },
                             {
                                 href: "",
-                                src:
+                                picSrc:
                                     "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1591088213641&di=32f73851711ffd2b57da6448e5a9ace1&imgtype=0&src=http%3A%2F%2Fstatic.baimao.com%2Fuploads%2Fnews%2Fimage%2F20171207%2F20171207161819_41660.jpg",
                                 alt: ""
                             },
                             {
                                 href: "",
-                                src:
+                                picSrc:
                                     "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1591088178162&di=d5b73259775477c25c575c4beb53c46c&imgtype=0&src=http%3A%2F%2Fsimg2.bigbigwork.com%2Fjhb%2Ff10a26904d1f11e90c7d713b49da0385.jpg",
                                 alt: ""
                             },
                             {
                                 href: "",
-                                src:
+                                picSrc:
                                     "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1591088284122&di=f98b557082234b50c976e1b915186b32&imgtype=0&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D2555003744%2C2749592312%26fm%3D214%26gp%3D0.jpg",
                                 alt: ""
                             }
@@ -381,7 +427,7 @@ export default {
                     icon: "fa-th-list",
                     name: "ListGraphic",
                     data: {
-                        title: "图文列表",
+                        title: "左侧列表",
                         childs: [
                             {
                                 title:
@@ -454,7 +500,7 @@ export default {
                     icon: "fa-th-list",
                     name: "ListGraphic",
                     data: {
-                        title: "图文列表",
+                        title: "右侧列表",
                         childs: [
                             {
                                 title:
@@ -477,7 +523,7 @@ export default {
                     icon: "fa-th-list",
                     name: "ListGraphic",
                     data: {
-                        title: "图文列表",
+                        title: "底部列表",
                         childs: [
                             {
                                 title:
@@ -499,7 +545,6 @@ export default {
         };
     },
     created() {
-        console.log(MODULESOURCE);
         let that = this;
         that.themeId = that.$route.params.theme;
         // 处理 xjs_up
@@ -649,7 +694,7 @@ export default {
             }
         },
         component_clone(evt) {
-            console.log(evt);
+            console.log("component_clone", evt);
             return JSON.parse(JSON.stringify(evt));
         },
 

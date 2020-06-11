@@ -6,7 +6,8 @@ import 'bootstrap/dist/js/bootstrap.min'
 import '../public/base.css'
 import store from './store'
 import axios from './http'
-// import 'swiper/css/swiper.min.css'
+
+import "toast2/dist/toast.css";
 
 import GlobalLoading from './components/GlobalLoading.vue'
 

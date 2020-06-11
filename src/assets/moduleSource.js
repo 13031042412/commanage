@@ -9,8 +9,8 @@ const MODULESOURCE = [
             childs: [
                 {
                     href: "http://www.jiangshi.org/",
-                    src:
-                        "http://img1.jiangshi.org/rsi/20200417/171006566350_1422.jpg",
+                    picSrc:
+                        "http://img1.jiangshi.org/rsi/20200609/091020403560_1422.jpg",
                     alt: "default pic."
                 }
             ]

@@ -14,39 +14,49 @@ const routes = [{
         path: '/home',
         name: 'General',
         component: () => import('../views/General.vue')
-    },{
+    }, {
         path: '/introduce',
         name: 'Introduce',
         component: () => import('../views/Introduce.vue')
-    },{
+    }, {
         path: '/pageDesign',
         name: 'PageDesign',
         component: () => import('../views/PageDesign.vue')
-    },{
+    }, {
         path: '/microDesign',
         name: 'MicroDesign',
         component: () => import('../views/MicroDesign.vue')
-    },{
+    }, {
         path: '/courses',
         name: 'Courses',
-        component: () => import('../views/Courses.vue')
-    },{
+        redirect: '/courses/list',
+        component: () => import('../views/Courses.vue'),
+        children: [{
+            path: '/courses/list',
+            name: 'CourseList',
+            component: () => import('../views/CourseList.vue')
+        }, {
+            path: '/courses/create',
+            name: 'CourseCreate',
+            component: () => import('../views/CourseCreate.vue')
+        }]
+    }, {
         path: '/videos',
         name: 'Videos',
         component: () => import('../views/Videos.vue')
-    },{
+    }, {
         path: '/blogs',
         name: 'Blogs',
         component: () => import('../views/Blogs.vue')
-    },{
+    }, {
         path: '/flower',
         name: 'Flower',
         component: () => import('../views/Flower.vue')
-    },{
+    }, {
         path: '/cash',
         name: 'Cash',
         component: () => import('../views/Cash.vue')
-    },{
+    }, {
         path: '/services',
         name: 'Services',
         component: () => import('../views/Services.vue')
@@ -55,6 +65,10 @@ const routes = [{
     path: '/design/:theme',
     name: 'Design',
     component: () => import('../views/Design.vue')
+}, {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login')
 }
 
 
@@ -63,18 +77,17 @@ const routes = [{
 
 
     , {
-        path: '/about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-    }
-    /*,{
-        path: '/!*',
-        name: 'Home',
-        component: Home
-    }*/
+    path: '/about',
+    name: 'About',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+}
+    , {
+    path: '/*',
+    redirect: '/home'
+}
 
 ];
 
