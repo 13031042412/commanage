@@ -14,8 +14,12 @@ body{min-width: 1240px;font-family: 'microsoft yahei';}
 }
 .font-18{font-size: 18px;}
 
+.ql-editor {
+    max-height: 400px;
+}
 
 .base_width{max-width: 1200px;margin-left: auto;margin-right: auto;}
 .base_right{height: 100%;background-color:#f5f7fa;margin-left: 180px;position: relative;overflow-x: hidden;overflow-y: auto;transition: padding ease .3s;padding-top: 56px;}
 .base_content{position: relative;width: 100%;padding: 20px;min-width: 1024px;}
 .base_mainContent{min-height: 640px;background-color: #fff;border-radius: 2px;}
+.hide{display: none;}

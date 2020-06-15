@@ -21,7 +21,21 @@ const routes = [{
     }, {
         path: '/pageDesign',
         name: 'PageDesign',
-        component: () => import('../views/PageDesign.vue')
+        redirect: '/pageDesign/shopIframe',
+        component: () => import('../views/PageDesign.vue'),
+        children: [{
+            path: '/pageDesign/shopIframe',
+            name: 'ShopIframe',
+            component: () => import('../views/pageDesign/ShopIframe.vue')
+        }, {
+            path: '/pageDesign/shopNav',
+            name: 'ShopNav',
+            component: () => import('../views/pageDesign/ShopNav.vue')
+        }, {
+            path: '/pageDesign/shopFooter',
+            name: 'ShopFooter',
+            component: () => import('../views/pageDesign/ShopFooter.vue')
+        }]
     }, {
         path: '/microDesign',
         name: 'MicroDesign',
@@ -43,11 +57,31 @@ const routes = [{
     }, {
         path: '/videos',
         name: 'Videos',
-        component: () => import('../views/Videos.vue')
+        redirect: '/videos/list',
+        component: () => import('../views/Videos.vue'),
+        children: [{
+            path: '/videos/list',
+            name: 'VideoList',
+            component: () => import('../views/VideoList.vue')
+        }, {
+            path: '/videos/create',
+            name: 'VideoCreate',
+            component: () => import('../views/VideoCreate.vue')
+        }]
     }, {
         path: '/blogs',
         name: 'Blogs',
-        component: () => import('../views/Blogs.vue')
+        redirect: '/blogs/list',
+        component: () => import('../views/Blogs.vue'),
+        children: [{
+            path: '/blogs/list',
+            name: 'BlogList',
+            component: () => import('../views/BlogList.vue')
+        }, {
+            path: '/blogs/create',
+            name: 'BlogCreate',
+            component: () => import('../views/BlogCreate.vue')
+        }]
     }, {
         path: '/flower',
         name: 'Flower',
@@ -69,6 +103,14 @@ const routes = [{
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login')
+}, {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../views/Register')
+}, {
+    path: '/reset',
+    name: 'Reset',
+    component: () => import('../views/Reset')
 }
 
 

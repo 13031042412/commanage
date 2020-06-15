@@ -3,7 +3,8 @@ const webpack = require('webpack')
 module.exports = {
     // baseUrl: '/',  //根路径
     // outputDir: 'dist',  //构建输出目录
-    // assetsDir: 'assets',  //静态资源目录(js,css,img,fonts)
+    // assetsDir: 'static',  //静态资源目录(js,css,img,fonts)
+    publicPath: './',
     // lintOnSave: false,  //是否开启eslint保存检查,有效值：true || flase || 'error'
     devServer: {    //开发服务设置
         // open: false,    //运行服务时是否自动打开站点,默认：false
@@ -26,10 +27,10 @@ module.exports = {
     configureWebpack: {
         plugins: [
             new webpack.ProvidePlugin({
-                $:"jquery",
+                $: "jquery",
 
-                jQuery:"jquery",
-                "windows.jQuery":"jquery"
+                jQuery: "jquery",
+                "windows.jQuery": "jquery"
             })
         ]
     }

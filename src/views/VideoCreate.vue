@@ -1,56 +1,31 @@
 <template>
-    <div class="CourseCreate">
+    <div class="videoCreate">
         <div class="row">
             <div class="col">
                 <form class="p-4" ref="form_create" novalidate>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label text-right">课程名称</label>
+                        <label class="col-sm-2 col-form-label text-right">标题</label>
                         <div class="col-sm-10">
                             <input
-                                v-model="courseName"
+                                v-model="title"
                                 type="text"
                                 class="form-control w-50"
-                                placeholder="请输入课程名称"
+                                placeholder="请输入文章标题"
                                 required
                             />
-                            <div class="invalid-feedback">请输入课程名称</div>
+                            <div class="invalid-feedback">请输入文章标题</div>
                         </div>
                     </div>
+
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label text-right">课程对象</label>
-                        <div class="col-sm-10">
-                            <input
-                                v-model="target"
-                                type="text"
-                                class="form-control w-50"
-                                placeholder="请输入课程对象"
-                                required
-                            />
-                            <div class="invalid-feedback">请输入课程对象</div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label text-right">课程目的</label>
-                        <div class="col-sm-10">
-                            <input
-                                v-model="purpose"
-                                type="text"
-                                class="form-control w-50"
-                                placeholder="请输入课程目的"
-                                required
-                            />
-                            <div class="invalid-feedback">请输入课程目的</div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label text-right">课程介绍</label>
+                        <label class="col-sm-2 col-form-label text-right">内容</label>
                         <div class="col-sm-10">
                             <vue-editor
                                 v-model="content"
                                 placeholder="请编辑内容"
                                 :editor-toolbar="customToolbar"
                             />
-                            <div ref="invalid_courseIntro" class="invalid-feedback">请输入课程介绍</div>
+                            <div ref="invalid_courseIntro" class="invalid-feedback">请编辑文章内容</div>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -79,7 +54,6 @@
                     <div class="form-group row">
                         <div class="col-sm-10 offset-sm-2">
                             <button class="btn btn-primary px-5" type="button" @click="submit">保存</button>
-                            <button class="btn btn-secondary px-5" type="button" @click="test">test</button>
                         </div>
                     </div>
                 </form>
@@ -92,12 +66,10 @@ import toast from "toast2";
 import { VueEditor } from "vue2-editor";
 import { mapMutations } from "vuex";
 export default {
-    name: "CourseCreate",
+    name: "VideoCreate",
     data() {
         return {
-            courseName: "",
-            target: "",
-            purpose: "",
+            title: "",
             content: "",
             code: "",
             customToolbar: [
@@ -119,7 +91,7 @@ export default {
     },
     components: { VueEditor },
     mounted() {
-        this.setTopBarTitle("发布课程");
+        this.setTopBarTitle("发布视频");
     },
     methods: {
         ...mapMutations(["setTopBarTitle"]),

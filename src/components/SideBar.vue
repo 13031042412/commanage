@@ -5,20 +5,20 @@
         </div>
         <div class="sidebarWrap">
             <div class="leftsidebarWrap">
-                <div class="sideMenu_item" @click="changeTopBarTitle('后台首页')">
+                <div class="sideMenu_item" @click="changeTopBarTitle('概括总览')">
                     <router-link
                         to="/home"
                         tag="div"
                         class="firstindexMenuWrap MenuCursorpointer newsideMenu"
                     >
                         <i class="fa fa-fw fa-home theicon"></i>
-                        <span class="firstpri_name MenuText">后台首页</span>
+                        <span class="firstpri_name MenuText">概括总览</span>
                     </router-link>
                     <div class="ScedindexMenuWrap">
                         <ul></ul>
                     </div>
                 </div>
-                <div class="sideMenu_item" @click="changeTopBarTitle('我的介绍')">
+                <!-- <div class="sideMenu_item" @click="changeTopBarTitle('我的介绍')">
                     <router-link
                         to="/introduce"
                         tag="div"
@@ -30,7 +30,7 @@
                     <div class="ScedindexMenuWrap">
                         <ul></ul>
                     </div>
-                </div>
+                </div>-->
                 <div class="sideMenu_item">
                     <div class="firstindexMenuWrap MenuCursorpointer newsideMenu">
                         <i class="fa fa-fw fa-laptop theicon"></i>
@@ -56,7 +56,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="sideMenu_item" @click="changeTopBarTitle('课程管理')">
+                <!-- <div class="sideMenu_item" @click="changeTopBarTitle('课程管理')">
                     <router-link
                         to="/courses"
                         tag="div"
@@ -107,7 +107,6 @@
                                 <router-link to="/flower" tag="span" class="sedMenuText MenuText">鲜花</router-link>
                             </li>
                             <li class="newsideMenu" @click="changeTopBarTitle('现金账户')">
-                                <!--<span class="sedMenuText MenuText test">现金账户</span>-->
                                 <router-link to="/cash" tag="span" class="sedMenuText MenuText">现金账户</router-link>
                             </li>
                         </ul>
@@ -125,9 +124,7 @@
                     <div class="ScedindexMenuWrap">
                         <ul></ul>
                     </div>
-                </div>
-
-                <button @click="test">test</button>
+                </div>-->
             </div>
         </div>
     </div>
@@ -147,7 +144,7 @@ export default {
         that.setTopBarTitle(
             !!$(".router-link-active")[0]
                 ? $(".router-link-active")[0].innerText
-                : "后台管理"
+                : "概括总览"
         );
         // console.log(that.$route);
     },
@@ -155,10 +152,6 @@ export default {
         ...mapMutations(["setTopBarTitle"]),
         changeTopBarTitle(val) {
             this.setTopBarTitle(val);
-        },
-
-        test() {
-            console.log(this);
         }
     }
 };

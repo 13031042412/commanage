@@ -1,12 +1,12 @@
 <template>
-    <div class="courseList p-4">
+    <div class="blogList p-4">
         <div class="row">
             <div class="col-4">
                 <input type="text" placeholder="搜索内容..." class="form-control" />
             </div>
             <div class="col">
                 <div class="text-right">
-                    <router-link tag="button" to="/courses/create" class="btn btn-primary">+发布课程</router-link>
+                    <router-link tag="button" to="/blogs/create" class="btn btn-primary">+发布文章</router-link>
                 </div>
             </div>
         </div>
@@ -136,7 +136,7 @@
 <script>
 import Paginate from "vuejs-paginate";
 export default {
-    name: "CourseList",
+    name: "BlogList",
     components: { Paginate },
     data() {
         return {

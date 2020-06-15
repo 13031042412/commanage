@@ -1,12 +1,12 @@
 <template>
-    <div class="courseList p-4">
+    <div class="videoList p-4">
         <div class="row">
             <div class="col-4">
                 <input type="text" placeholder="搜索内容..." class="form-control" />
             </div>
             <div class="col">
                 <div class="text-right">
-                    <router-link tag="button" to="/courses/create" class="btn btn-primary">+发布课程</router-link>
+                    <router-link tag="button" to="/videos/create" class="btn btn-primary">+发布视频</router-link>
                 </div>
             </div>
         </div>
@@ -15,7 +15,8 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr class="text-center bg-light">
-                            <th scope="col" style="width:50%">课程名称</th>
+                            <th scope="col">视频图片</th>
+                            <th scope="col" style="width:40%">课程名称</th>
                             <th scope="col">发布时间</th>
                             <th scope="col">审核状态</th>
                             <th scope="col">操作</th>
@@ -23,6 +24,15 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td class="text-center video-poster-wrap">
+                                <a class="video-poster" href="##" target="_bank">
+                                    <img
+                                        class="w-100 d-block"
+                                        src="https://puui.qpic.cn/vpic/0/y060001sqqx_160_90_3.jpg/0"
+                                        alt
+                                    />
+                                </a>
+                            </td>
                             <td>
                                 <div class="d-flex table-title">
                                     <a
@@ -42,60 +52,6 @@
                                     <i class="fa fa-check-circle text-danger font-18 align-middle"></i> 审核失败
                                 </span>
                                 <span v-if="0==2">
-                                    <i class="fa fa-check-circle text-warning font-18 align-middle"></i> 审核中
-                                </span>
-                            </td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-link btn-sm">编辑</button> |
-                                <button type="button" class="btn btn-link btn-sm">删除</button> |
-                                <button type="button" class="btn btn-link btn-sm">取消置顶</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a
-                                    href="##"
-                                    target="_bank"
-                                    class="table-title text-truncate text-secondary"
-                                >真有钱！香港向18岁及以上居民每人派1万元</a>
-                                <span class="top">置顶</span>
-                            </td>
-                            <td class="text-center">2019-02-22</td>
-                            <td class="text-center">
-                                <span v-if="0==1">
-                                    <i class="fa fa-check-circle text-success font-18 align-middle"></i> 审核通过
-                                </span>
-                                <span v-if="0==0">
-                                    <i class="fa fa-check-circle text-danger font-18 align-middle"></i> 审核失败
-                                </span>
-                                <span v-if="0==2">
-                                    <i class="fa fa-check-circle text-warning font-18 align-middle"></i> 审核中
-                                </span>
-                            </td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-link btn-sm">编辑</button> |
-                                <button type="button" class="btn btn-link btn-sm">删除</button> |
-                                <button type="button" class="btn btn-link btn-sm">取消置顶</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a
-                                    href="##"
-                                    target="_bank"
-                                    class="table-title text-truncate text-secondary"
-                                >真有钱！香港向18岁及以上居民每人派1万元</a>
-                                <span class="top">置顶</span>
-                            </td>
-                            <td class="text-center">2019-02-22</td>
-                            <td class="text-center">
-                                <span v-if="0==2">
-                                    <i class="fa fa-check-circle text-success font-18 align-middle"></i> 审核通过
-                                </span>
-                                <span v-if="0==1">
-                                    <i class="fa fa-check-circle text-danger font-18 align-middle"></i> 审核失败
-                                </span>
-                                <span v-if="0==0">
                                     <i class="fa fa-check-circle text-warning font-18 align-middle"></i> 审核中
                                 </span>
                             </td>
@@ -136,7 +92,7 @@
 <script>
 import Paginate from "vuejs-paginate";
 export default {
-    name: "CourseList",
+    name: "VideoList",
     components: { Paginate },
     data() {
         return {
@@ -159,6 +115,13 @@ export default {
 .table td,
 .table th {
     vertical-align: middle;
+}
+.video-poster-wrap {
+    width: 190px;
+}
+.video-poster {
+    display: block;
+    width: 160px;
 }
 .table-title {
     max-width: 450px;

@@ -10,11 +10,7 @@
 
 <script>
 export default {
-    name: "Courses",
-    data() {
-        return {};
-    },
-    methods: {}
+    name: "Courses"
 };
 </script>
 

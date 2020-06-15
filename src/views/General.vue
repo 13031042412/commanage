@@ -131,6 +131,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col">
+                        <h4>测试</h4>
+                        <router-link to="/login">登录</router-link>
+                    </div>
                 </div>
             </div>
         </div>
