@@ -1,0 +1,77 @@
+a:hover{color:#ff6900;}
+/*导航*/
+.xjs_navbar{background:rgba(255,255,255,.85);margin-bottom:20px;min-width:1160px;}
+.xjs_navbar-body{width:1140px;display:-webkit-box;display:-ms-flexbox;display:flex;justify-content:space-between;margin:0 auto;align-items:center;}
+.xjs_navbar-brand{font-size:18px;padding:10px;color:#0181da;}
+.xjs_navbar-brand img{max-width:130px;max-height:45px;}
+.xjs_navbar-nav li{display:inline-block;}
+.xjs_navbar-nav li a{padding:20px 30px;font-size:16px;}
+
+
+/*九宫盒布局 设置容器宽度*/
+.xjs_flex_container{width:1160px;min-width:1160px;}
+
+
+
+
+/*轮播图*/
+.xjs_banner {width: 1140px;min-height: 100px;}
+.xjs_banner .swiper-slide{text-align:center;}
+.xjs_banner .swiper-slide img{max-width: 100%;}
+
+
+
+.xjs_section{margin-bottom:20px;}
+
+/* .content{width:1140px;margin:0 auto;display:flex;display:-webkit-flex;justify-content:space-between;}
+.content:after{content:'.'; display:block; height:0; visibility:hidden; clear:both}
+.content-left{flex:1 250px;padding:10px;}
+.content-middle{flex:1 600px;padding:10px;}
+.content-right{flex:1 250px;padding:10px;} */
+
+.xjs_content-title{height:40px;line-height:40px;padding:0 15px;background:rgba(255,255,255,.5);margin-bottom:10px;font-weight:normal;}
+.xjs_content-title i{color:#ff6900;}
+.xjs_content-title span{color:#0181da;}
+
+/*media*/
+.xjs_media{padding:15px;background:rgba(255,255,255,.5);border:1px solid transparent;transition:all .5s;-webkit-transition:all .5s;
+    display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align: start;-ms-flex-align: start;align-items: flex-start;margin-bottom:10px;}
+.xjs_media:hover{border-color:#ff6900;}
+.xjs_media-pic{display:inline-block;width:170px;max-width:40%;margin-right:10px;overflow:hidden;}
+.xjs_media-pic img{width:100%;max-height:130px;position:relative;transition:all .5s;-webkit-transition:all .5s;}
+.xjs_media-pic img:hover{transform:scale(1.2);}
+.xjs_media-body {-webkit-box-flex: 1;-ms-flex: 1;flex: 1;}
+.xjs_media-body h5{font-size:16px;margin-bottom:10px;}
+.xjs_media-text{font-size:13px;margin-bottom:10px;color:#515151;height:40px;line-height:20px;overflow:hidden;text-overflow:ellipsis;}
+.xjs_media-bottom span{margin-right:5px;color:#999;font-size:13px;}
+.xjs_media-bottom i{color:#ff6900;font-size:13px;}
+
+
+/*teacher*/
+.xjs_module_teacher{padding:45px 0 0;}
+.xjs_module_teacher-content{position:relative;background:rgba(255,255,255,.5);padding:50px 10px 20px;}
+.xjs_module_teacher-head{display:block;}
+.xjs_module_teacher-headPic{position:absolute;top:-45px;left:calc(50% - 45px);border-radius:100%;border:5px solid #fff;width:90px;height:90px;transition:all 0.8s;-webkit-transition:all 0.8s;}
+.xjs_module_teacher-headPic:hover{transform:rotate(360deg);-webkit-transform:rotate(360deg);}
+.xjs_module_teacher-name{color:#0181da;text-align:center;margin-bottom:5px;font-size:16px;}
+.xjs_module_teacher-brand,.xjs_module_teacher-position{font-size:13px;text-align:center;margin-bottom:10px;}
+.xjs_module_teacher-brand{color:#d81e06;font-weight:bold;}
+.xjs_module_teacher-contact{display:-webkit-box;display:-ms-flexbox;display:flex;margin:10px auto 0;max-width: 300px;}
+.xjs_module_teacher-contact dt{width:90px;text-align:right;}
+.xjs_module_teacher-contact dd{width:100px;flex-grow:1;}
+.xjs_module_teacher-qrcode{max-width:100%;margin-top:5px;}
+
+
+/*list*/
+.xjs_module_list-news-head{height:40px;line-height:40px;padding:0 15px;background:rgba(255,255,255,.5);margin-bottom:10px;font-weight:normal;}
+.xjs_module_list-news-head i{color:#ff6900;}
+.xjs_module_list-news-head span{color:#0181da;}
+.xjs_module_list-news-body{padding:0 15px;background:rgba(255,255,255,.5);}
+.xjs_module_list-news-item{padding:10px;border-bottom:1px dashed #ccc;}
+.xjs_module_list-news-item a{width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+
+
+
+
+
+.xjs_footer{clear:both;padding:40px 0;text-align:center;}

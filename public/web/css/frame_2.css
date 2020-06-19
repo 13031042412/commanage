@@ -1,0 +1,6 @@
+/*两列 左宽*/
+.xjs_flex_section_up{order:1;}
+.xjs_flex_aside_left{order:2;display:none; }
+.xjs_flex_aside_middle{order:3;flex:1 620px;-ms-flex:1 620px; }
+.xjs_flex_aside_right{order:4;flex:0 370px;-ms-flex:0 370px;width:370px; }
+.xjs_flex_section_down{order:5;display:none; }

@@ -41,6 +41,28 @@ const routes = [{
         name: 'MicroDesign',
         component: () => import('../views/MicroDesign.vue')
     }, {
+        path: '/material',
+        name: 'Material',
+        redirect: '/material/materialPics',
+        component: () => import('../views/Material.vue'),
+        children: [{
+            path: '/material/materialPics',
+            name: 'Pics',
+            component: () => import('../views/material/Pics')
+        }, {
+            path: '/material/materialVideos',
+            name: 'Videos',
+            component: () => import('../views/material/Videos')
+        }, {
+            path: '/material/materialAudios',
+            name: 'Audios',
+            component: () => import('../views/material/Audios')
+        }, {
+            path: '/material/materialEbook',
+            name: 'Ebook',
+            component: () => import('../views/material/Ebook')
+        }]
+    }, {
         path: '/courses',
         name: 'Courses',
         redirect: '/courses/list',

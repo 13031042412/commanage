@@ -1,0 +1,23 @@
+@charset "UTF-8";
+@import "//at.alicdn.com/t/font_1687492_xhbs4u9t84.css";
+*{margin:0;padding:0;outline:none;border:0 none;}
+*,*::before,*::after {box-sizing:border-box;}
+html{height:100%}
+a{text-decoration:none;color:#333;display:inline-block}
+ul,li{list-style:none}
+.clearfix:after{content:'.'; display:block; height:0; visibility:hidden; clear:both}
+body{font-size:14px;background-color:#E9EAED;}
+
+/*九宫盒布局*/
+.xjs_flex_container{display: -webkit-box;display: -ms-flexbox;display: flex;flex-flow: row wrap;-ms-flex-flow: row wrap;margin:0 auto;}
+.xjs_flex_container > *{padding:10px;flex:1 100%;-ms-flex:1 100%;}
+
+
+
+
+
+
+::-webkit-scrollbar{width:8px;height:10px;background-color:rgba(0,0,0,0);}
+::-webkit-scrollbar-track{background-color:rgba(0,0,0,.1);}
+::-webkit-scrollbar-thumb{border-radius:6px;background-color:rgba(0,0,0,.2);transition:all .4s ease;-moz-transition:all .4s ease;-webkit-transition:all .4s ease;-o-transition:all .4s ease;}
+::-webkit-scrollbar-thumb:hover{border-radius:6px;background-color:rgba(0,0,0,.4);transition:all .4s ease;-moz-transition:all .4s ease;-webkit-transition:all .4s ease;-o-transition:all .4s ease;}

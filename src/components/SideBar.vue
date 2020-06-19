@@ -18,7 +18,7 @@
                         <ul></ul>
                     </div>
                 </div>
-                <!-- <div class="sideMenu_item" @click="changeTopBarTitle('我的介绍')">
+                <div class="sideMenu_item" @click="changeTopBarTitle('我的介绍')">
                     <router-link
                         to="/introduce"
                         tag="div"
@@ -30,7 +30,7 @@
                     <div class="ScedindexMenuWrap">
                         <ul></ul>
                     </div>
-                </div>-->
+                </div>
                 <div class="sideMenu_item">
                     <div class="firstindexMenuWrap MenuCursorpointer newsideMenu">
                         <i class="fa fa-fw fa-laptop theicon"></i>
@@ -53,10 +53,17 @@
                                     class="sedMenuText MenuText"
                                 >移动端</router-link>
                             </li>
+                            <li class="newsideMenu" @click="changeTopBarTitle('素材中心')">
+                                <router-link
+                                    to="/material"
+                                    tag="span"
+                                    class="sedMenuText MenuText"
+                                >素材中心</router-link>
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <!-- <div class="sideMenu_item" @click="changeTopBarTitle('课程管理')">
+                <div class="sideMenu_item" @click="changeTopBarTitle('课程管理')">
                     <router-link
                         to="/courses"
                         tag="div"
@@ -124,7 +131,7 @@
                     <div class="ScedindexMenuWrap">
                         <ul></ul>
                     </div>
-                </div>-->
+                </div>
             </div>
         </div>
     </div>
